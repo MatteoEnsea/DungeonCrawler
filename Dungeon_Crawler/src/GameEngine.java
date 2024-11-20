@@ -1,25 +1,32 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Level;
 
 public class GameEngine implements Engine, KeyListener {
-    public GameState gameState = GameState.TitleScreen;
+    public GameState gameState;
     public final DynamicSprite hero;
-    private final RenderEngine renderEngine;
 
     public DynamicSprite getHero() {
         return hero;
     }
 
-    public GameEngine(DynamicSprite hero, RenderEngine renderEngine) {
+    public GameEngine(DynamicSprite hero) {
         this.hero = hero;
-        this.renderEngine = renderEngine;
     }
 
     @Override
-    public void update() {
-        if (this.hero.life <= 0){
-            gameState = GameState.GameOver;
-
+    public void update(GameState gameState) {
+        this.gameState = gameState;
+        switch (gameState) {
+            default:
+                break;
+            case Running:
+                if (this.hero.life <= 0) {
+                    Main.setGameState(GameState.GameOver);
+                    hero.setLife(20);
+                    LevelManager.setCurrentLevelIndex(0);
+                }
+            break;
         }
     }
 
@@ -45,8 +52,7 @@ public class GameEngine implements Engine, KeyListener {
                         this.hero.speed = 10;
                         break;
                     case KeyEvent.VK_ESCAPE:
-                        gameState = GameState.Paused;
-                        renderEngine.setGameState(gameState);
+                        Main.setGameState(GameState.Paused);
                         break;
                     case KeyEvent.VK_SPACE:
                         hero.life = hero.life - 1;
@@ -54,18 +60,15 @@ public class GameEngine implements Engine, KeyListener {
                 break;
             case TitleScreen:
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    gameState = GameState.Running;
-                    renderEngine.setGameState(gameState);
+                    Main.setGameState(GameState.Running);
                 }
             case GameOver:
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    gameState = GameState.TitleScreen;
-                    renderEngine.setGameState(gameState);
+                    Main.setGameState(GameState.TitleScreen);
                 }
             case Paused:
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    gameState = GameState.Running;
-                    renderEngine.setGameState(gameState);
+                    Main.setGameState(GameState.Running);
                 }
         }
     }

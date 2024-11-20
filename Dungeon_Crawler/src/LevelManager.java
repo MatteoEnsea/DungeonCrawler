@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class LevelManager {
     private ArrayList<String> levelPaths;
-    private int currentLevelIndex;
+    static int currentLevelIndex;
     private Playground currentPlayground;
 
     public LevelManager() {
@@ -12,6 +12,10 @@ public class LevelManager {
         levelPaths.add("./data/level1.txt");
         levelPaths.add("./data/level2.txt");
         levelPaths.add("./data/level3.txt");
+    }
+
+    public static void setCurrentLevelIndex(int LevelIndex) {
+        currentLevelIndex = LevelIndex;
     }
 
     public Playground loadCurrentLevel() throws Exception {

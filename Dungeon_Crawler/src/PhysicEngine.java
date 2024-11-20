@@ -65,7 +65,7 @@ public class PhysicEngine implements Engine {
 
 
     @Override
-    public void update() {
+    public void update(GameState gameState) {
         for (DynamicSprite s : movingSpriteList) {
             s.moveIfPossible(environnement);
             if (currentPlayground.isPlayerInExit(gameEngine.hero)) {

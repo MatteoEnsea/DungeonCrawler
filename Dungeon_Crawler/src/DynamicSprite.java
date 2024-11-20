@@ -18,6 +18,10 @@ public class DynamicSprite extends SolidSprite {
         this.direction = direction;
     }
 
+    public void setLife(int life) {
+        this.life = life;
+    }
+
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;

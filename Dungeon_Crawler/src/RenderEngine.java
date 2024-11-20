@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class RenderEngine extends JPanel implements Engine {
     private ArrayList<Displayable> renderList;
-    private GameState gameState = GameState.TitleScreen;
+    private GameState gameState;
 
     public RenderEngine() {
         this.renderList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class RenderEngine extends JPanel implements Engine {
 
     public void displayTitleScreen(Graphics g) {
         g.drawString("Bienvenue !", 100, 100);
-        g.drawString("Appuyez sur ENTRER pour commencer !", 200, 200);
+        g.drawString("Appuyez sur ESCAPE pour commencer !", 200, 200);
     }
 
     public void displayGameOverScreen(Graphics g) {
@@ -72,7 +72,8 @@ public class RenderEngine extends JPanel implements Engine {
     }
 
     @Override
-    public void update() {
+    public void update(GameState gameState) {
+        this.gameState = gameState;
         repaint();
     }
 

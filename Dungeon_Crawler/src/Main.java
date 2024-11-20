@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -9,7 +10,11 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class Main {
 
     public static LevelManager levelManager;
-    public GameState gameState = GameState.TitleScreen;
+    private static GameState gameState = GameState.TitleScreen;
+
+    public static void setGameState(GameState State) {
+        gameState = State;
+    }
 
     JFrame displayZoneFrame;
 
@@ -19,6 +24,7 @@ public class Main {
 
 
     public Main() throws Exception {
+
         displayZoneFrame = new JFrame("Java Labs");
         displayZoneFrame.setSize(1920, 1080);
         displayZoneFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,7 +34,7 @@ public class Main {
 
         renderEngine = new RenderEngine();
         physicEngine = new PhysicEngine();
-        gameEngine = new GameEngine(hero, renderEngine);
+        gameEngine = new GameEngine(hero);
         levelManager = new LevelManager();
 
         physicEngine.setRenderEngine(renderEngine);
@@ -36,7 +42,7 @@ public class Main {
 
         Timer renderTimer = new Timer(50, (time) -> renderEngine.update(gameState));
         Timer gameTimer = new Timer(50, (time) -> gameEngine.update(gameState));
-        Timer physicTimer = new Timer(50, (time) -> physicEngine.update(gameState   ));
+        Timer physicTimer = new Timer(50, (time) -> physicEngine.update(gameState));
 
         renderTimer.start();
         gameTimer.start();
