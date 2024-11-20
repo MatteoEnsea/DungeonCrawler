@@ -1,8 +1,1 @@
-Ecran titre
-Game over
-Indicateur de vie
-Niveaux
-
-Si temps :
-Ennemies
-Attaque CaC
+//
