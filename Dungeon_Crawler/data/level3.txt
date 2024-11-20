@@ -3,7 +3,7 @@ R                      R
 R    RR                R
 R    RR                R
 R             T        R
-.                      R
+R                      R
 R             T        R
 R    RR                R
 R    RR                R
