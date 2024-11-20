@@ -8,6 +8,7 @@ public class DynamicSprite extends SolidSprite {
     final int spriteSheetNumberOfColumn = 10;
     int timeBetweenFrame = 200;
     Direction direction = Direction.NORTH;
+    int life = 20;
 
     public DynamicSprite(Image image, double x, double y, double width, double height) {
         super(image, x, y, width, height);
@@ -15,6 +16,11 @@ public class DynamicSprite extends SolidSprite {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     private void move() {

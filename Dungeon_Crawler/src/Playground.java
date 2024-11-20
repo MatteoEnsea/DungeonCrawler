@@ -20,6 +20,8 @@ public class Playground {
             final int imageGrassWidth = imageGrass.getWidth(null);
             final int imageGrassHeight = imageGrass.getHeight(null);
             final int imageRockWidth = imageRock.getWidth(null);
+            final int imageTrapWidth = imageTrap.getWidth(null);
+            final int imageTrapHeight = imageTrap.getHeight(null);
 
             final int imageRockHeight = imageRock.getHeight(null);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(pathName));
@@ -30,16 +32,20 @@ public class Playground {
                 for (byte element : line.getBytes(StandardCharsets.UTF_8)) {
                     switch (element) {
                         case 'T':
-                            environment.add(new SolidSprite(imageTree,columnNumber * imageTreeWidth,
+                            environment.add(new SolidSprite(imageTree, columnNumber * imageTreeWidth,
                                     lineNumber * imageTreeHeight, imageTreeWidth, imageTreeHeight));
                             break;
                         case ' ':
-                            environment.add(new Sprite(imageGrass,columnNumber * imageGrassWidth,
+                            environment.add(new Sprite(imageGrass, columnNumber * imageGrassWidth,
                                     lineNumber * imageGrassHeight, imageGrassWidth, imageGrassHeight));
                             break;
                         case 'R':
-                            environment.add(new SolidSprite(imageRock,columnNumber * imageRockWidth,
+                            environment.add(new SolidSprite(imageRock, columnNumber * imageRockWidth,
                                     lineNumber * imageRockHeight, imageRockWidth, imageRockHeight));
+                            break;
+                        case '.': // Représente une sortie
+                            environment.add(new ExitSprite(imageTrap, columnNumber * imageTrapWidth,
+                                    lineNumber * imageTrapHeight, imageTrapWidth, imageTrapHeight));
                             break;
                     }
                     columnNumber++;
@@ -56,7 +62,7 @@ public class Playground {
     public ArrayList<SolidSprite> getSolidSpriteList() {
         ArrayList<SolidSprite> solidSpriteArrayList = new ArrayList<>();
         for (Sprite sprite : environment) {
-            if (sprite instanceof SolidSprite) solidSpriteArrayList.add((SolidSprite)sprite);
+            if (sprite instanceof SolidSprite) solidSpriteArrayList.add((SolidSprite) sprite);
         }
         return solidSpriteArrayList;
     }
@@ -68,4 +74,19 @@ public class Playground {
         }
         return displayableArrayList;
     }
+
+    public boolean isPlayerInExit(DynamicSprite player) {
+        for (Sprite sprite : environment) {
+            if (sprite instanceof ExitSprite) {
+                ExitSprite exit = (ExitSprite) sprite;
+                if (exit.getHitBox().intersects(player.getHitBox())) {
+                    System.out.println("Collision détectée avec la sortie!");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

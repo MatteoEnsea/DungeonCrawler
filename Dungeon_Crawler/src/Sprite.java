@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Sprite implements Displayable {
 
@@ -14,6 +15,10 @@ public class Sprite implements Displayable {
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    public Rectangle2D.Double getHitBox() {
+        return new Rectangle2D.Double(x, y, width, height);
     }
 
     @Override

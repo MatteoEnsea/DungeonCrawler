@@ -1,5 +1,5 @@
 public interface Engine {
 
-    void update();
+    void update(GameState gameState);
 
 }

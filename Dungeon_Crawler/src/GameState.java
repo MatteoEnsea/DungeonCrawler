@@ -1,4 +1,4 @@
 public enum GameState {
-    GameOver,TitleScreen,Level;
+    GameOver,TitleScreen,Running,Paused;
 
 }
