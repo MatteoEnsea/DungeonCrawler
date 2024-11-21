@@ -28,11 +28,14 @@ public class PhysicEngine implements Engine {
         this.currentPlayground = playground;
     }
 
-    public void loadNextLevel(LevelManager levelManager) {
+    /**
+     * Charge le prochain niveau : réinitialise tout l'environnement actuel et le met à jour
+     * @param level : niveau actuel
+     */
+    public void loadNextLevel(Level level) {
         try {
-            if (levelManager.hasNextLevel()) {
-                // Charge le prochain niveau
-                Playground nextLevel = levelManager.loadNextLevel();
+            if (level.hasNextLevel()) {
+                Playground nextLevel = level.loadNextLevel();
 
                 // Mise à jour de l'environnement et du niveau actuel
                 currentPlayground = nextLevel;
@@ -51,7 +54,7 @@ public class PhysicEngine implements Engine {
                 System.out.println("Niveau suivant chargé !");
             } else {
                 System.out.println("Vous avez terminé tous les niveaux !");
-                // Logique de fin de jeu, comme un écran de victoire ou un retour au menu
+                // Fin de jeu, comme un écran de victoire ou un retour au menu, non fait dans cette version
             }
         } catch (Exception e) {
             e.printStackTrace();

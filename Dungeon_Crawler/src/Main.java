@@ -1,15 +1,12 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ArrayList;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main implements GameLevelManager {
 
-    public static LevelManager levelManager;
+    public static Level levelManager;
     private static GameState gameState = GameState.TitleScreen;
 
     public static void setGameState(GameState State) {
@@ -35,7 +32,7 @@ public class Main implements GameLevelManager {
         renderEngine = new RenderEngine();
         physicEngine = new PhysicEngine();
         gameEngine = new GameEngine(hero, this);
-        levelManager = new LevelManager();
+        levelManager = new Level();
 
         physicEngine.setRenderEngine(renderEngine);
         physicEngine.setGameEngine(gameEngine);
@@ -57,6 +54,7 @@ public class Main implements GameLevelManager {
         physicEngine.addToMovingSpriteList(hero);
         physicEngine.setEnvironment(level.getSolidSpriteList());
         physicEngine.setCurrentPlayground(level);
+        renderEngine.setHero(hero);
 
         displayZoneFrame.addKeyListener(gameEngine);
 
@@ -69,9 +67,10 @@ public class Main implements GameLevelManager {
         Main main = new Main();
     }
 
+    // Methode pour charger le premier niveau apres le game over
     @Override
     public void loadLevel(int levelIndex) throws Exception {
-        LevelManager.setCurrentLevelIndex(levelIndex);
+        Level.setCurrentLevelIndex(levelIndex);
         Playground level = levelManager.loadCurrentLevel();
 
 
@@ -86,6 +85,7 @@ public class Main implements GameLevelManager {
         gameEngine.hero.setPosition(200, 300);
     }
 
+    // Méthode pour reset le level apres un game over
     @Override
     public void resetLevel() throws Exception {
         loadLevel(0);

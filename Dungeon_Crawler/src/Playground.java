@@ -75,6 +75,12 @@ public class Playground {
         return displayableArrayList;
     }
 
+    /**
+     *Vérifie si le joueur (hero) est sur une sortie
+     * Utilisée lors de l'update du PhysicEngine
+     * @param player
+     * @return True : est sur une sortie
+     */
     public boolean isPlayerInExit(DynamicSprite player) {
         for (Sprite sprite : environment) {
             if (sprite instanceof ExitSprite) {
