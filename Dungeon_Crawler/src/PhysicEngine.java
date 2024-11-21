@@ -40,13 +40,13 @@ public class PhysicEngine implements Engine {
 
                 // Réinitialisation de la liste des objets mobiles dans le moteur physique
                 movingSpriteList.clear();
-                gameEngine.getHero().setPosition(200, 300); // Réinitialise la position du héros si nécessaire
-                addToMovingSpriteList(gameEngine.getHero());
+                gameEngine.hero.setPosition(200, 300);
+                addToMovingSpriteList(gameEngine.hero);
 
                 // Mise à jour du RenderEngine
                 renderEngine.clearRenderList();
                 renderEngine.addToRenderList(nextLevel.getSpriteList());
-                renderEngine.addToRenderList(gameEngine.getHero()); // Ajoute à la liste de rendu
+                renderEngine.addToRenderList(gameEngine.hero); // Ajoute à la liste de rendu
 
                 System.out.println("Niveau suivant chargé !");
             } else {
@@ -66,12 +66,20 @@ public class PhysicEngine implements Engine {
 
     @Override
     public void update(GameState gameState) {
-        for (DynamicSprite s : movingSpriteList) {
-            s.moveIfPossible(environnement);
-            if (currentPlayground.isPlayerInExit(gameEngine.hero)) {
-                loadNextLevel(Main.levelManager);
-            }
+        switch (gameState) {
+            case Running:
+                for (DynamicSprite s : movingSpriteList) {
+                    s.moveIfPossible(environnement);
+                    if (currentPlayground.isPlayerInExit(gameEngine.hero)) {
+                        loadNextLevel(Main.levelManager);
+                    }
+                }
+                break;
+            default:
+                break;
         }
+
+
     }
 
 }

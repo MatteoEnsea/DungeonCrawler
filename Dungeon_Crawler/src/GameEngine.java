@@ -5,13 +5,11 @@ import java.util.logging.Level;
 public class GameEngine implements Engine, KeyListener {
     public GameState gameState;
     public final DynamicSprite hero;
+    private final GameLevelManager levelManager;
 
-    public DynamicSprite getHero() {
-        return hero;
-    }
-
-    public GameEngine(DynamicSprite hero) {
+    public GameEngine(DynamicSprite hero, GameLevelManager levelManager) {
         this.hero = hero;
+        this.levelManager = levelManager;
     }
 
     @Override
@@ -24,7 +22,11 @@ public class GameEngine implements Engine, KeyListener {
                 if (this.hero.life <= 0) {
                     Main.setGameState(GameState.GameOver);
                     hero.setLife(20);
-                    LevelManager.setCurrentLevelIndex(0);
+                    try {
+                        levelManager.resetLevel();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             break;
         }

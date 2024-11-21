@@ -38,5 +38,11 @@ public class LevelManager {
     public Playground getCurrentPlayground() {
         return currentPlayground;
     }
+
+    public void reset() {
+        currentLevelIndex = 0; // Réinitialiser l'index au premier niveau
+    }
+
+
 }
 

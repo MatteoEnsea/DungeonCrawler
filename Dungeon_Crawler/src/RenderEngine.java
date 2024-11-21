@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class RenderEngine extends JPanel implements Engine {
     private ArrayList<Displayable> renderList;
     private GameState gameState;
+    private LevelManager level;
 
     public RenderEngine() {
         this.renderList = new ArrayList<>();

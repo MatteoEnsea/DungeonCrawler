@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class Main {
+public class Main implements GameLevelManager {
 
     public static LevelManager levelManager;
     private static GameState gameState = GameState.TitleScreen;
@@ -34,7 +34,7 @@ public class Main {
 
         renderEngine = new RenderEngine();
         physicEngine = new PhysicEngine();
-        gameEngine = new GameEngine(hero);
+        gameEngine = new GameEngine(hero, this);
         levelManager = new LevelManager();
 
         physicEngine.setRenderEngine(renderEngine);
@@ -63,8 +63,32 @@ public class Main {
 
     }
 
+
+
     public static void main(String[] args) throws Exception {
         Main main = new Main();
+    }
+
+    @Override
+    public void loadLevel(int levelIndex) throws Exception {
+        LevelManager.setCurrentLevelIndex(levelIndex);
+        Playground level = levelManager.loadCurrentLevel();
+
+
+        renderEngine.clearRenderList();
+        renderEngine.addToRenderList(level.getSpriteList());
+        renderEngine.addToRenderList(gameEngine.hero);
+
+
+        physicEngine.setEnvironment(level.getSolidSpriteList());
+        physicEngine.setCurrentPlayground(level);
+
+        gameEngine.hero.setPosition(200, 300);
+    }
+
+    @Override
+    public void resetLevel() throws Exception {
+        loadLevel(0);
     }
 }
 
